@@ -1,0 +1,69 @@
+<aura:component implements="force:appHostable" controller="FileMakerController">
+    <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="showResult" type="Boolean" default="false" />
+    <aura:attribute name="accept" type="List" default="['.csv']" />
+    <aura:attribute name="multiple" type="Boolean" default="false" />
+    <aura:attribute name="disabled" type="Boolean" default="false" />
+    <!--attribute for response-->
+    <aura:attribute name="userCount" type="Integer" />
+    <aura:attribute name="totalAmount" type="Decimal" />
+    <aura:attribute name="rows" type="List" default="[]" />
+    <aura:attribute name="columns" type="List" default="[]" />
+    <!--Reupload related attributes-->
+    <aura:attribute name="isReupload" type="Boolean" default="false" />
+    <aura:attribute name="caseRecordId" type="String" default="" />
+    <!--modal related attributes-->
+    <aura:attribute name="showModal" type="Boolean" default="false" />   
+    <!--Handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="slds-box slds-theme_default">
+        <aura:if isTrue="{!v.showModal}">
+            <section role="dialog" tabindex="-1" aria-label="Modal for showing file upload" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header slds-modal__header_empty">
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="file-upload-component">
+                        <lightning:fileUpload name="fileUploader" label="Upload CSV" multiple="{!v.multiple}"
+                            disabled="{!v.disabled}" recordId="{!v.accountId}" accept="{!v.accept}"
+                            onuploadfinished="{! c.handleUploadFinished }" />
+                        <aura:if isTrue="{!v.showResult}">
+                            <lightning:layout multipleRows="true">
+                                <lightning:layoutItem size="12">
+                                    <p>User count :
+                                        <lightning:formattedNumber aria-label="User count" value="{! v.userCount }" />
+                                    </p>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="12">
+                                    <p>Total amount:
+                                        <lightning:formattedNumber aria-label="Total amount" value="{! v.totalAmount }"
+                                            style="currency" currencyCode="INR" currencyDisplayAs="symbol" />
+                                    </p>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem size="12">
+                                    <p>Top rows :</p>
+                                    <lightning:datatable keyField="id" data="{! v.rows }" columns="{! v.columns }"
+                                        hideCheckboxColumn="true" />
+                                </lightning:layoutItem>
+                            </lightning:layout>
+
+
+                        </aura:if>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button label="Close" title="Close" onclick="{! c.closeModal}"
+                            class="slds-m-left_x-small"></lightning:button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open">
+            </div>
+        </aura:if>
+        <div class="slds-float_right">
+            <lightning:button label="Upload file" title="Upload file" onclick="{! c.handleUploadNew}"
+                class="slds-m-left_x-small"></lightning:button>
+        </div>
+        <c:fileCheckComponent onreupload="{! c.handleReupload }"></c:fileCheckComponent>
+    </div>
+</aura:component>

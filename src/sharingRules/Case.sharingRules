@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>Share_with_checker</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Share with checker</label>
+        <sharedTo>
+            <group>Checker</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Maker</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

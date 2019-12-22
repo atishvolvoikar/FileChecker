@@ -1,0 +1,14 @@
+<template>
+    <div class="slds-theme_default">
+        <lightning-layout class="slds-p-around_small">
+            <lightning-layout-item size="3">
+                <lightning-combobox name="listView" label="Select file type" value={selectedOption} options={options}
+                    onchange={handleChange}>
+                </lightning-combobox>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-datatable key-field="Id" data={data} columns={columns} onrowaction={handleRowAction}
+            hide-checkbox-column="true">
+        </lightning-datatable>
+    </div>
+</template>
